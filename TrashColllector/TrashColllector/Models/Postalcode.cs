@@ -7,5 +7,8 @@ namespace TrashColllector.Models
 {
     public class Postalcode
     {
+        public int  Id{ get; set; }
+        public int cityId { get; set; }
+        public City city{ get; set; }
     }
 }

@@ -5,7 +5,9 @@ using System.Web;
 
 namespace TrashColllector.Models
 {
-    public class Weekday
+    public class pickUpDay
     {
+        public int Id { get; set; }
+        public string name { get; set; }
     }
 }

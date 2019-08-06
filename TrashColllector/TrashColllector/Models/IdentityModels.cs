@@ -20,7 +20,14 @@ namespace TrashColllector.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-       
+        public DbSet<Employee> employees{ get; set; }
+        public DbSet<Address> Addresses{ get; set; }
+        public DbSet<City> ciities { get; set; }
+        public DbSet<Postalcode> postalcode { get; set; }
+        public DbSet<pickUpDay> pickUpDays { get; set; }
+        public DbSet<Workorder> workorders { get; set; }
+        public DbSet<Customer> customers { get; set; }
+        public DbSet<State> states { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
