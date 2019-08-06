@@ -13,6 +13,7 @@ namespace TrashColllector.Models
         public string addressId { get; set; }
         public string WeeklyPickUpDay { get; set; }
         public string postalCode { get; set; }
+        public string bill { get; set; }
 
 
     }
