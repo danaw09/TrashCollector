@@ -179,6 +179,10 @@
     <Compile Include="Migrations\201908061840037_initialMigration.Designer.cs">
       <DependentUpon>201908061840037_initialMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908070342401_seedingInfo.cs" />
+    <Compile Include="Migrations\201908070342401_seedingInfo.Designer.cs">
+      <DependentUpon>201908070342401_seedingInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -190,6 +194,7 @@
     <Compile Include="Models\Postalcode.cs" />
     <Compile Include="Models\pickUpDay.cs" />
     <Compile Include="Models\State.cs" />
+    <Compile Include="Models\WeekDay.cs" />
     <Compile Include="Models\Workorder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -280,6 +285,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201908061840037_initialMigration.resx">
       <DependentUpon>201908061840037_initialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908070342401_seedingInfo.resx">
+      <DependentUpon>201908070342401_seedingInfo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

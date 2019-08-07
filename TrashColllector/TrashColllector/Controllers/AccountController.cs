@@ -136,21 +136,19 @@ namespace TrashColllector.Controllers
         }
 
         //
-        // GET: /Account/RegisterCustomer
+        // GET: /Account/Registerc
         [AllowAnonymous]
-        public ActionResult RegisterCustomer()
+        public ActionResult Register()
         {
-            var viewModel = new RegisterViewModel();
-          
             return View();
         }
 
         //
-        // POST: /Account/RegisterCustomer
+        // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> RegisterCustomer(RegisterCustomerViewModel model)
         {
             if (ModelState.IsValid)
             {

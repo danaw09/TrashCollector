@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -28,6 +29,9 @@ namespace TrashColllector.Models
         public DbSet<Workorder> workorders { get; set; }
         public DbSet<Customer> customers { get; set; }
         public DbSet<State> states { get; set; }
+        public object State { get; internal set; }
+        public object States { get; internal set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
