@@ -1,0 +1,98 @@
+﻿@model TrashColllector.Models.Customer
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Customer</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.firstname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.firstname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Streetaddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Streetaddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.addressId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.addressId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WeeklyPickUpDay)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WeeklyPickUpDay)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.postalCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.postalCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.bill)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.bill)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.city)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.city)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.state)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.state)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UserId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

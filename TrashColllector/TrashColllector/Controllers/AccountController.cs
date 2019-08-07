@@ -17,9 +17,10 @@ namespace TrashColllector.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        private ApplicationDbContext _context;
         public AccountController()
         {
+            _context = new ApplicationDbContext();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -135,15 +136,17 @@ namespace TrashColllector.Controllers
         }
 
         //
-        // GET: /Account/Register
+        // GET: /Account/RegisterCustomer
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult RegisterCustomer()
         {
+            var viewModel = new RegisterViewModel();
+          
             return View();
         }
 
         //
-        // POST: /Account/Register
+        // POST: /Account/RegisterCustomer
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
