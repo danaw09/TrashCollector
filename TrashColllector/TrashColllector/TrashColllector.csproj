@@ -193,6 +193,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Postalcode.cs" />
     <Compile Include="Models\pickUpDay.cs" />
+    <Compile Include="Models\RoleName.cs" />
     <Compile Include="Models\State.cs" />
     <Compile Include="Models\WeekDay.cs" />
     <Compile Include="Models\Workorder.cs" />
@@ -265,6 +266,8 @@
     <Content Include="Views\Customers\Details.cshtml" />
     <Content Include="Views\Customers\Edit.cshtml" />
     <Content Include="Views\Customers\Index.cshtml" />
+    <Content Include="Views\RegisterCustomer.cshtml" />
+    <Content Include="Views\RegisterEmployee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
