@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using TrashCollector.Models;
 
 namespace TrashColllector.Models
 {
@@ -122,7 +123,8 @@ namespace TrashColllector.Models
         [Display(Name = "Weekly Service Day")]
         public int WeeklyPickupDayId { get; set; }
 
-        public IEnumerable<WeekDay> DaysOfOperation { get; set; }
+        public IEnumerable<WeekDay> GetWeekDays{ get; set; }
+        public object DaysOfOperation { get; internal set; }
     }
 
     public class RegisterEmployeeViewModel
@@ -159,7 +161,7 @@ namespace TrashColllector.Models
 
         public int ServicePostalCodeId { get; set; }
         public Postalcode ServicePostalCode { get; set; }
-
+        public int FirstName { get; internal set; }
     }
 
     public class ResetPasswordViewModel

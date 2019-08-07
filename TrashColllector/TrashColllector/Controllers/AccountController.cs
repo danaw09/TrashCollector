@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using TrashCollector.Models;
 using TrashColllector.Models;
 
 namespace TrashColllector.Controllers
@@ -135,13 +136,18 @@ namespace TrashColllector.Controllers
             }
         }
 
-        //
-        // GET: /Account/Registerc
-        [AllowAnonymous]
-        public ActionResult Register()
+
+        //GET: /Account/RegisterCustomer
+       [AllowAnonymous]
+        public ActionResult RegisterCustomer()
         {
-            return View();
+            var viewModel = new RegisterCustomerViewModel();
+            viewModel.DaysOfOperation = WeekDay.GetOperatingDays(_context);
+            viewModel.StateList = State.GetStates(_context);
+            return View(viewModel);
         }
+
+
 
         //
         // POST: /Account/Register

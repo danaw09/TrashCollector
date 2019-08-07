@@ -9,9 +9,10 @@ namespace TrashColllector.Models
     public class Employee
     {
         [Key]
-        public int Id { get; set; }
-        public int FirstName { get; set; }
-        public int LastName { get; set; }
+        public string Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public int postalCode { get; set; }
+        public int? ServicePostalCodeId { get; internal set; }
     }
 }

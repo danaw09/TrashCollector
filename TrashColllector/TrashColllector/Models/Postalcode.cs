@@ -10,5 +10,10 @@ namespace TrashColllector.Models
         public int  Id{ get; set; }
         public int cityId { get; set; }
         public City city{ get; set; }
+
+        internal static int GetPostalCodeId(ApplicationDbContext context, string servicePostalCodeForm)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

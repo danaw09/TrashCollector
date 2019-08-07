@@ -21,6 +21,8 @@ namespace TrashColllector.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        internal IEnumerable<object> WeekDays;
+
         public DbSet<Employee> employees{ get; set; }
         public DbSet<Address> Addresses{ get; set; }
         public DbSet<City> ciities { get; set; }
