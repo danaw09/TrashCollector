@@ -61,9 +61,10 @@ namespace TrashColllector.Models
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+        public string UserName { get; internal set; }
     }
 
-    public class RegisterCustomerViewModel
+    public class RegisterViewModel
     {
 
         [Required]
@@ -128,6 +129,8 @@ namespace TrashColllector.Models
         public object RoleName { get; internal set; }
     }
 
+
+    
     public class RegisterEmployeeViewModel
     {
 

@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using TrashCollector.Models;
 
 namespace TrashColllector.Models
 {
@@ -28,10 +29,11 @@ namespace TrashColllector.Models
         public DbSet<City> ciities { get; set; }
         public DbSet<Postalcode> postalcode { get; set; }
         public DbSet<pickUpDay> pickUpDays { get; set; }
-        public DbSet<Workorder> workorders { get; set; }
+      
         public DbSet<Customer> customers { get; set; }
         public DbSet<State> states { get; set; }
-        
+        public DbSet<WeekDay> WeekDays { get; set; }
+
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

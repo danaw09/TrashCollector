@@ -58,7 +58,7 @@ namespace TrashColllector.Controllers
                 .Include(c => c.WeeklyPickUpDay)
                 .Single(c => c.UserId == id);
 
-                
+
             return View(ViewBag);
         }
 
@@ -87,7 +87,7 @@ namespace TrashColllector.Controllers
         }
 
         // GET: Customers/Edit/5
-       // POST: Customers/Edit/5
+        // POST: Customers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]

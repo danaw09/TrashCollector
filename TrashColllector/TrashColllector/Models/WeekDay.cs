@@ -21,13 +21,12 @@ namespace TrashCollector.Models
         public string AbbreviationMedium { get; set; }
 
         [Required]
-        public string AbbreviationLong { get; set; }
 
-     
-     
+        public bool AreOperating { get; set; }
 
-
-
-        
+        internal static object GetOperatingDays(ApplicationDbContext _context)
+        {
+            return _context.WeekDays.Where(w => w.AreOperating ==true).ToList();
+        }
     }
 }

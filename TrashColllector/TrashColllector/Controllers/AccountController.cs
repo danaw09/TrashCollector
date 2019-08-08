@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -13,18 +14,20 @@ using TrashColllector.Models;
 
 namespace TrashColllector.Controllers
 {
+
     [Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private ApplicationDbContext _context;
+        ApplicationDbContext db;
+
         public AccountController()
         {
-            _context = new ApplicationDbContext();
+            db = new ApplicationDbContext();
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -36,9 +39,9 @@ namespace TrashColllector.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -54,7 +57,7 @@ namespace TrashColllector.Controllers
             }
         }
 
-        //
+        //ACCOUNT/LOGIN GET
         // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -63,7 +66,7 @@ namespace TrashColllector.Controllers
             return View();
         }
 
-        //
+        //ACCOUNT/LOGIN POST
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
@@ -77,7 +80,7 @@ namespace TrashColllector.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -93,7 +96,7 @@ namespace TrashColllector.Controllers
             }
         }
 
-        //
+        //ACCOUNT/VERIFYCODE GET
         // GET: /Account/VerifyCode
         [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
@@ -106,7 +109,7 @@ namespace TrashColllector.Controllers
             return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
 
-        //
+        //ACCOUNT/VERYIFYCODE POST
         // POST: /Account/VerifyCode
         [HttpPost]
         [AllowAnonymous]
@@ -122,7 +125,7 @@ namespace TrashColllector.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -136,25 +139,22 @@ namespace TrashColllector.Controllers
             }
         }
 
-
-        //GET: /Account/Register
-       [AllowAnonymous]
+        //ACCOUNT/REGISTER GET
+        // GET: /Account/Register
+        [AllowAnonymous]
         public ActionResult Register()
         {
-            ViewBag.Name = new SelectList(_context.Roles.ToList(), "Name", "Name");
+            ViewBag.Name = new SelectList(db.Roles.ToList(), "Name", "Name");
             return View();
         }
 
-
-
-        //
+        //ACCOUNT/REGISTER POST
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterCustomerViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model)
         {
-
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser
@@ -167,7 +167,7 @@ namespace TrashColllector.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
@@ -176,7 +176,7 @@ namespace TrashColllector.Controllers
                     await UserManager.AddToRoleAsync(user.Id, model.RoleName);
                     return RedirectToAction("Index", "Home");
                 }
-                ViewBag.Name = new SelectList(_context.Roles.ToList(), "Name", "Name");
+                ViewBag.Name = new SelectList(db.Roles.ToList(), "Name", "Name");
                 AddErrors(result);
             }
 
@@ -221,7 +221,7 @@ namespace TrashColllector.Controllers
                     return View("ForgotPasswordConfirmation");
                 }
 
-                // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
                 // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
@@ -250,69 +250,6 @@ namespace TrashColllector.Controllers
         }
 
         //
-            // GET: /Account/RegisterEmployee
-        [Authorize(Roles = RoleName.Employee)]
-        public ActionResult RegisterEmployee()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Account/RegisterEmployee
-        [HttpPost]
-        [Authorize(Roles = RoleName.Employee)]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RegisterEmployee(RegisterEmployeeViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-
-                var user = new ApplicationUser
-                {
-                    UserName = model.Email,
-                    Email = model.Email
-                };
-
-                var result = await UserManager.CreateAsync(user, model.Password);
-
-                if (result.Succeeded)
-                {
-                    model.ServicePostalCodeId = Postalcode.GetPostalCodeId(_context, model.ServicePostalCodeForm);
-
-                    var newEmployee = new Employee()
-                    {
-                        Id = user.Id,
-                        FirstName = model.NameFirst,
-                        LastName= model.NameLast,
-                        ServicePostalCodeId = model.ServicePostalCodeId == 0 ? null : (int?)model.ServicePostalCodeId
-                    };
-
-                    _context.employees.Add(newEmployee);
-                    _context.SaveChanges();
-                    
-
-                    await UserManager.AddToRoleAsync(user.Id, RoleName.Employee);
-                    
-                    // Removed auto sign in, as the creation is being done by a logged in user already
-                    // await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    return RedirectToAction("Index", "Home");
-                }
-                AddErrors(result);
-            }
-
-            // If we got this far, something failed, redisplay form
-            return View(model);
-        }
-
-
-
         // POST: /Account/ResetPassword
         [HttpPost]
         [AllowAnonymous]
