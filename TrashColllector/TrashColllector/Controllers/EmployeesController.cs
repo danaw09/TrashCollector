@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using TrashCollector.Models;
 using TrashColllector.Models;
 
 namespace TrashColllector.Controllers
@@ -19,7 +20,11 @@ namespace TrashColllector.Controllers
         {
             return View(db.employees.ToList());
         }
-
+        // GET: Employee/Create
+        public ActionResult Create()
+        {
+            return RedirectToAction("RegisterEmployee", "Account");
+        }
         // GET: Employees/Details/5
         public ActionResult Details(int? id)
         {
@@ -35,12 +40,19 @@ namespace TrashColllector.Controllers
             return View(employee);
         }
 
-        // GET: Employees/Create
-        public ActionResult Create()
+        // GET: Employee/Edit/5
+        public ActionResult Edit(string id)
         {
-            return View();
+            var employee = db.employees.Include(e => e.ServicePostalCode).Single(e => e.UserId == id);
+            var viewModel = new EmployeeViewModel()
+            {
+                FirstName = employee.NameFirst,
+                LastName = employee.NameLast,
+                UserId = employee.UserId,
+                ServicePostalCodeForm = employee.ServicePostalCode.Code
+            };
+            return View(viewModel);
         }
-
         // POST: Employees/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -56,6 +68,14 @@ namespace TrashColllector.Controllers
             }
 
             return View(employee);
+        }
+        // GET: Employee
+        public ActionResult Index()
+        {
+            var employees = db.employees
+                .Include(e => e.ServicePostalCode)
+                .ToList();
+            return View(employees);
         }
 
         // GET: Employees/Edit/5

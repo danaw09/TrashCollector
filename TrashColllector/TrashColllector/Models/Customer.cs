@@ -17,8 +17,7 @@ namespace TrashColllector.Models
         public string bill { get; set; }
         public string city { get; set; }
         public string state { get; set; }
-
-
+        public object Address { get; internal set; }
     }
    
 }

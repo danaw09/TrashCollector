@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using TrashCollector.Models;
 using TrashColllector.Models;
 
 namespace TrashColllector.Controllers
@@ -14,17 +16,13 @@ namespace TrashColllector.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Customers
-        public ActionResult Index()
-        {
-            return View(db.customers.ToList());
-        }
+        public IEnumerable<State> StateList { get; private set; }
 
         [Authorize(Roles = RoleName.Employee)]
         public ActionResult Details(string id)
         {
             var Customer = db.customers
-                .Include(c => c.Streetaddress.Postalcodes.city.State)
+                .Include(c => c.Streetaddress)
                 .Include(c => c.WeeklyPickUpDay)
                 .Single(c => c.UserId == id);
 
@@ -36,29 +34,34 @@ namespace TrashColllector.Controllers
         {
             if (User.IsInRole(RoleName.Employee))
             {
-                var customers = _context.Customers
-                    .Include(c => c.Address.PostalCode.City.State)
-                    .Include(c => c.WeeklyPickupDay)
+                var customers = db.customers
+                    .Include(c => c.Streetaddress)
+                    .Include(c => c.WeeklyPickUpDay)
                     .ToList();
                 return View(customers);
             }
 
             return RedirectToAction("Edit", "Customer", new { id = User.Identity.GetUserId() });
         }
-        // GET: Customers/Details/5
-        public ActionResult Details(string id)
+
+        // GET: Customer/Edit/5
+        [Authorize]
+        public ActionResult Edit(string id)
         {
-            if (id == null)
+            if (!User.IsInRole(RoleName.Employee))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                id = User.Identity.GetUserId();
             }
-            Customer customer = db.customers.Find(id);
-            if (customer == null)
-            {
-                return HttpNotFound();
-            }
-            return View(customer);
+
+            var customerInDb = db.customers
+                .Include(c => c.Address)
+                .Include(c => c.WeeklyPickUpDay)
+                .Single(c => c.UserId == id);
+
+                
+            return View(ViewBag);
         }
+
 
         // GET: Customers/Create
         public ActionResult Create()
@@ -84,21 +87,7 @@ namespace TrashColllector.Controllers
         }
 
         // GET: Customers/Edit/5
-        public ActionResult Edit(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Customer customer = db.customers.Find(id);
-            if (customer == null)
-            {
-                return HttpNotFound();
-            }
-            return View(customer);
-        }
-
-        // POST: Customers/Edit/5
+       // POST: Customers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]

@@ -7,13 +7,8 @@ using TrashColllector.Models;
 
 namespace TrashCollector.Models
 {
-    public class CustomerIndexViewModels
-    {
-        public ApplicationUser Customer { get; set; }
-        public Workorder NextWorkOrder { get; set; }
-    }
 
-    public class CustomerProfileViewModel
+    public class CustomerViewModel
     {
        
         public string UserId { get; set; }

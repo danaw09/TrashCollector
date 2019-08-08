@@ -1,45 +1,45 @@
-﻿@model IEnumerable<TrashColllector.Models.Employee>
+﻿@model TrashColllector.Models.Employee
 
-@{
-    ViewBag.Title = "Index";
+
+@@{
+    ViewBag.Title = "Employees";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.postalCode)
-        </th>
-        <th></th>
-    </tr>
+<div>
+    <p>@Html.ActionLink("New Employee", "RegisterEmployee", "Account", null, new { @class = "btn btn-default" })</p>
+</div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.postalCode)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+<table id="employees" class="table table-bordered table-hover table-responsive">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Service Postal Code</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>@employee.NameFirst</td>
+                <td>@employee.NameLast</td>
+                <td>@(employee.ServicePostalCode == null ? "" : employee.ServicePostalCode.Code)</td>
+                <td>@Html.ActionLink("Edit", "Edit", "Employee", new { id = employee.UserId }, null)</td>
+            </tr>
+        }
+    </tbody>
 
 </table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#employees").DataTable();
+        })
+    </script>
+}

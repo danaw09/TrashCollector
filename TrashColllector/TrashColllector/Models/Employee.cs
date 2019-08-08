@@ -9,10 +9,23 @@ namespace TrashColllector.Models
     public class Employee
     {
         [Key]
-        public string Id { get; set; }
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
+
+        [Required]
+        [Key]
+        public string UserId { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
-        public int postalCode { get; set; }
-        public int? ServicePostalCodeId { get; internal set; }
+        public int? ServicePostalCodeId { get; set; }
+        public Postalcode ServicePostalCode { get; set; }
+
+
+        public static Employee GetEmployeeById(ApplicationDbContext _context, string userId)
+        {
+            return _context.employees.SingleOrDefault(e => e.UserId== userId);
+        }
     }
 }
