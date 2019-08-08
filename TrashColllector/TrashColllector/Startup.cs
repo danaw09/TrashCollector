@@ -1,5 +1,10 @@
-﻿using Microsoft.Owin;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Owin;
 using Owin;
+using TrashColllector.Models;
+
+
 
 [assembly: OwinStartupAttribute(typeof(TrashColllector.Startup))]
 namespace TrashColllector
@@ -9,6 +14,11 @@ namespace TrashColllector
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+
+
         }
-    }
+	
+
+	}
+    
 }

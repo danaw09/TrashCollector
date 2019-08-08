@@ -21,7 +21,7 @@ namespace TrashColllector.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        internal IEnumerable<object> WeekDays;
+      
 
         public DbSet<Employee> employees{ get; set; }
         public DbSet<Address> Addresses{ get; set; }
@@ -31,7 +31,7 @@ namespace TrashColllector.Models
         public DbSet<Workorder> workorders { get; set; }
         public DbSet<Customer> customers { get; set; }
         public DbSet<State> states { get; set; }
-      
+        
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

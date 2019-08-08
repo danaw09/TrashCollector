@@ -20,6 +20,31 @@ namespace TrashColllector.Controllers
             return View(db.customers.ToList());
         }
 
+        [Authorize(Roles = RoleName.Employee)]
+        public ActionResult Details(string id)
+        {
+            var Customer = db.customers
+                .Include(c => c.Streetaddress.Postalcodes.city.State)
+                .Include(c => c.WeeklyPickUpDay)
+                .Single(c => c.UserId == id);
+
+            return View(Customer);
+        }
+        // GET: Customer
+        [Authorize]
+        public ActionResult Index()
+        {
+            if (User.IsInRole(RoleName.Employee))
+            {
+                var customers = _context.Customers
+                    .Include(c => c.Address.PostalCode.City.State)
+                    .Include(c => c.WeeklyPickupDay)
+                    .ToList();
+                return View(customers);
+            }
+
+            return RedirectToAction("Edit", "Customer", new { id = User.Identity.GetUserId() });
+        }
         // GET: Customers/Details/5
         public ActionResult Details(string id)
         {

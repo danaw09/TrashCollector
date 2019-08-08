@@ -23,17 +23,11 @@ namespace TrashCollector.Models
         [Required]
         public string AbbreviationLong { get; set; }
 
-        [Required]
-        public bool AreOperating { get; set; }
+     
+     
 
-        internal static IEnumerable<WeekDay> GetWeekday(ApplicationDbContext context)
-        {
-            throw new NotImplementedException();
-        }
 
-        internal static object GetOperatingDays(ApplicationDbContext context)
-        {
-            throw new NotImplementedException();
-        }
+
+        
     }
 }

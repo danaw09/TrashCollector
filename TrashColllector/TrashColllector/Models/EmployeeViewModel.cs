@@ -14,12 +14,12 @@ namespace TrashCollector.Models
 
         [Required]
         [Display(Name = "Last Name")]
-        public string NameLast { get; set; }
+        public string LastName { get; set; }
 
         [Required]
         [StringLength(50)]
         [Display(Name = "First Name")]
-        public string NameFirst { get; set; }
+        public string FirstName{ get; set; }
 
         public int? ServicePostalCodeId { get; set; }
         public Postalcode ServicePostalCode { get; set; }

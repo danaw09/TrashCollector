@@ -125,6 +125,7 @@ namespace TrashColllector.Models
 
         public IEnumerable<WeekDay> GetWeekDays{ get; set; }
         public object DaysOfOperation { get; internal set; }
+        public object RoleName { get; internal set; }
     }
 
     public class RegisterEmployeeViewModel

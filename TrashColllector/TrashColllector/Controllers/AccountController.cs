@@ -137,14 +137,12 @@ namespace TrashColllector.Controllers
         }
 
 
-        //GET: /Account/RegisterCustomer
+        //GET: /Account/Register
        [AllowAnonymous]
-        public ActionResult RegisterCustomer()
+        public ActionResult Register()
         {
-            var viewModel = new RegisterCustomerViewModel();
-            viewModel.DaysOfOperation = WeekDay.GetOperatingDays(_context);
-            viewModel.StateList = State.GetStates(_context);
-            return View(viewModel);
+            ViewBag.Name = new SelectList(_context.Roles.ToList(), "Name", "Name");
+            return View();
         }
 
 
@@ -154,24 +152,31 @@ namespace TrashColllector.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RegisterCustomer(RegisterCustomerViewModel model)
+        public async Task<ActionResult> Register(RegisterCustomerViewModel model)
         {
+
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = model.NameFirst,
+                    Email = model.Email
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
+                    await UserManager.AddToRoleAsync(user.Id, model.RoleName);
                     return RedirectToAction("Index", "Home");
                 }
+                ViewBag.Name = new SelectList(_context.Roles.ToList(), "Name", "Name");
                 AddErrors(result);
             }
 
@@ -245,6 +250,69 @@ namespace TrashColllector.Controllers
         }
 
         //
+            // GET: /Account/RegisterEmployee
+        [Authorize(Roles = RoleName.Employee)]
+        public ActionResult RegisterEmployee()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Account/RegisterEmployee
+        [HttpPost]
+        [Authorize(Roles = RoleName.Employee)]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegisterEmployee(RegisterEmployeeViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email
+                };
+
+                var result = await UserManager.CreateAsync(user, model.Password);
+
+                if (result.Succeeded)
+                {
+                    model.ServicePostalCodeId = Postalcode.GetPostalCodeId(_context, model.ServicePostalCodeForm);
+
+                    var newEmployee = new Employee()
+                    {
+                        Id = user.Id,
+                        FirstName = model.NameFirst,
+                        LastName= model.NameLast,
+                        ServicePostalCodeId = model.ServicePostalCodeId == 0 ? null : (int?)model.ServicePostalCodeId
+                    };
+
+                    _context.employees.Add(newEmployee);
+                    _context.SaveChanges();
+                    
+
+                    await UserManager.AddToRoleAsync(user.Id, RoleName.Employee);
+                    
+                    // Removed auto sign in, as the creation is being done by a logged in user already
+                    // await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    return RedirectToAction("Index", "Home");
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+
+
         // POST: /Account/ResetPassword
         [HttpPost]
         [AllowAnonymous]
