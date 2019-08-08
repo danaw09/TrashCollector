@@ -35,7 +35,7 @@ namespace TrashCollector.Models
 
         [Required]
         [Display(Name = "City")]
-        public string CityForm { get; set; }
+        public string CityName{ get; set; }
 
         [Required]
         [Display(Name = "State")]
@@ -44,10 +44,8 @@ namespace TrashCollector.Models
         public IEnumerable<State> StateList { get; set; }
 
         [Required]
-        [StringLength(5, MinimumLength = 5, ErrorMessage = "Zip code must be 5 digits")]
-        [RegularExpression("^[0-9]{5}$", ErrorMessage = "Zip code can only contain numerical digits.")]
         [Display(Name = "Postal Code")]
-        public string PostalCodeForm { get; set; }
+        public string PostalCode { get; set; }
 
         public int AddressId { get; set; }
         public Address Address { get; set; }
@@ -57,5 +55,7 @@ namespace TrashCollector.Models
         public int WeeklyPickupDayId { get; set; }
 
         public IEnumerable<WeekDay> DaysOfOperation { get; set; }
+
+        
     }
 }
