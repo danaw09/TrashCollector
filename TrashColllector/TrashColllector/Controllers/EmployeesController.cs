@@ -16,10 +16,7 @@ namespace TrashColllector.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Employees
-        public ActionResult Index()
-        {
-            return View(db.employees.ToList());
-        }
+        
         // GET: Employee/Create
         public ActionResult Create()
         {
@@ -46,8 +43,8 @@ namespace TrashColllector.Controllers
             var employee = db.employees.Include(e => e.ServicePostalCode).Single(e => e.UserId == id);
             var viewModel = new EmployeeViewModel()
             {
-                FirstName = employee.NameFirst,
-                LastName = employee.NameLast,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
                 UserId = employee.UserId,
                 ServicePostalCodeForm = employee.ServicePostalCode.Code
             };

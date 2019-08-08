@@ -1,12 +1,10 @@
-﻿@model TrashColllector.Models.Employee
-
-
-@@{
-    ViewBag.Title = "Employees";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@model  IEnumerable<TrashColllector.Models.Employee>
+@{
+    ViewBag.Title = "Index";
 }
 
-<h2>@ViewBag.Title</h2>
+<h2>Index</h2>
+
 
 <div>
     <p>@Html.ActionLink("New Employee", "RegisterEmployee", "Account", null, new { @class = "btn btn-default" })</p>
@@ -25,8 +23,8 @@
         @foreach (var employee in Model)
         {
             <tr>
-                <td>@employee.NameFirst</td>
-                <td>@employee.NameLast</td>
+                <td>@employee.FirstName</td>
+                <td>@employee.LastName</td>
                 <td>@(employee.ServicePostalCode == null ? "" : employee.ServicePostalCode.Code)</td>
                 <td>@Html.ActionLink("Edit", "Edit", "Employee", new { id = employee.UserId }, null)</td>
             </tr>
