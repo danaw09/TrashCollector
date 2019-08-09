@@ -66,7 +66,8 @@ namespace TrashColllector.Controllers
         // GET: Customers/Create
         public ActionResult Create()
         {
-            return View();
+            var user = db.Users.Find(User.Identity.GetUserId());
+            return View(user);
         }
 
         // POST: Customers/Create

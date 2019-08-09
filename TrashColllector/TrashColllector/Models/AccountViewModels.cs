@@ -91,46 +91,13 @@ namespace TrashColllector.Models
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
-
-        [Required]
-        [StringLength(20)]
-        public string Phone { get; set; }
-
-        [Required]
-        [Display(Name = "Address")]
-        public string AddressForm { get; set; }
-
-        [Required]
-        [Display(Name = "City")]
-        public string CityForm { get; set; }
-
-        [Required]
-        [Display(Name = "State")]
-        public int StateIdForm { get; set; }
-
-        public IEnumerable<State> StateList { get; set; }
-
-        [Required]
-        [StringLength(5, MinimumLength = 5, ErrorMessage = "Zip code must be 5 digits")]
-        [RegularExpression("^[0-9]{5}$", ErrorMessage = "Zip code can only contain numerical digits.")]
-        [Display(Name = "Postal Code")]
-        public string PostalCodeForm { get; set; }
-
-        public int AddressId { get; set; }
-        public Address Address { get; set; }
-
-        [Required]
-        [Display(Name = "Weekly Service Day")]
-        public int WeeklyPickupDayId { get; set; }
-
-        public IEnumerable<WeekDay> GetWeekDays{ get; set; }
-        public object DaysOfOperation { get; internal set; }
-        public object RoleName { get; internal set; }
+        public string ConfirmPassword { get; set; }   
+       
+   
+        public string RoleName { get; internal set; }
     }
 
 
-    
     public class RegisterEmployeeViewModel
     {
 
