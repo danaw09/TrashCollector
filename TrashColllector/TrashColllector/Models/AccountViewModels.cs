@@ -94,7 +94,10 @@ namespace TrashColllector.Models
         [Required]
         [Display(Name = "UserRoles")]
         public string UserRoles { get; set; }
-        //public string RoleName { get; internal set; }
+
+        [Required]
+        [Display(Name = "UserName")]
+        public string UserName { get; set; }
     }
 
 

@@ -14,7 +14,7 @@ namespace TrashColllector.Models
 
         [Required]
         [Key]
-        public string UserId { get; set; }
+        public string UserName { get; set; }
 
         [Required]
         [Display(Name = "Last Name")]
@@ -22,10 +22,6 @@ namespace TrashColllector.Models
         public int? ServicePostalCodeId { get; set; }
         public Postalcode ServicePostalCode { get; set; }
         public string ServicePostalCodeForm { get; internal set; }
-
-        public static Employee GetEmployeeById(ApplicationDbContext _context, string userId)
-        {
-            return _context.employees.SingleOrDefault(e => e.UserId== userId);
-        }
+        public string UserId { get; internal set; }
     }
 }
