@@ -50,10 +50,10 @@ namespace TrashColllector.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "UserName")]
         [EmailAddress]
-        public string Email { get; set; }
-
+        public string UserName { get; set; }
+        
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
@@ -61,19 +61,17 @@ namespace TrashColllector.Models
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
-        public string UserName { get; internal set; }
+       
     }
 
     public class RegisterViewModel
     {
 
         [Required]
-        [StringLength(100)]
         [Display(Name = "Last Name")]
         public string NameLast { get; set; }
 
         [Required]
-        [StringLength(50)]
         [Display(Name = "First Name")]
         public string NameFirst { get; set; }
 
@@ -91,25 +89,22 @@ namespace TrashColllector.Models
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }   
-       
-   
-        public string RoleName { get; internal set; }
+        public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "UserRoles")]
+        public string UserRoles { get; set; }
+        //public string RoleName { get; internal set; }
     }
 
 
-    public class RegisterEmployeeViewModel
+    public class ResetPasswordViewModel
     {
-
         [Required]
-        [StringLength(100)]
-        [Display(Name = "Last Name")]
-        public string NameLast { get; set; }
+        [Display(Name = "UserRoles")]
+        public string UserRoles { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        [Display(Name = "First Name")]
-        public string NameFirst { get; set; }
+        
 
         [Required]
         [EmailAddress]
@@ -132,35 +127,17 @@ namespace TrashColllector.Models
 
         public int ServicePostalCodeId { get; set; }
         public Postalcode ServicePostalCode { get; set; }
-        public int FirstName { get; internal set; }
-    }
+        public string Code { get; internal set; }
+    
 
-    public class ResetPasswordViewModel
-    {
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+    
 
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password")]
-        public string Password { get; set; }
-
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
-
-        public string Code { get; set; }
-    }
-
-    public class ForgotPasswordViewModel
-    {
-        [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
-    }
+        public class ForgotPasswordViewModel
+        {
+            [Required]
+            [EmailAddress]
+            [Display(Name = "Email")]
+            public string Email { get; set; }
+    }    }
+    
 }

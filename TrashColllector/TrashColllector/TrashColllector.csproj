@@ -204,14 +204,16 @@
     <Compile Include="Migrations\201908082201180_seedDeleteWorkerOrder.Designer.cs">
       <DependentUpon>201908082201180_seedDeleteWorkerOrder.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908100249444_seededState.cs" />
+    <Compile Include="Migrations\201908100249444_seededState.Designer.cs">
+      <DependentUpon>201908100249444_seededState.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\CustomerViewModel.cs" />
     <Compile Include="Models\Employee.cs" />
-    <Compile Include="Models\EmployeeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Postalcode.cs" />
@@ -329,6 +331,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908082201180_seedDeleteWorkerOrder.resx">
       <DependentUpon>201908082201180_seedDeleteWorkerOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908100249444_seededState.resx">
+      <DependentUpon>201908100249444_seededState.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

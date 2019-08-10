@@ -41,7 +41,7 @@ namespace TrashColllector.Controllers
         public ActionResult Edit(string id)
         {
             var employee = db.employees.Include(e => e.ServicePostalCode).Single(e => e.UserId == id);
-            var viewModel = new EmployeeViewModel()
+            var viewModel = new Employee()
             {
                 FirstName = employee.FirstName,
                 LastName = employee.LastName,

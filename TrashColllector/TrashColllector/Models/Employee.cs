@@ -21,7 +21,7 @@ namespace TrashColllector.Models
         public string LastName { get; set; }
         public int? ServicePostalCodeId { get; set; }
         public Postalcode ServicePostalCode { get; set; }
-
+        public string ServicePostalCodeForm { get; internal set; }
 
         public static Employee GetEmployeeById(ApplicationDbContext _context, string userId)
         {
